@@ -1,5 +1,6 @@
 package facci.pm.ta3.sqlite.trabajoautonomo3sqlite.database.entities;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.BaseColumns;
@@ -35,6 +36,10 @@ public class ShoppingItemDB {
 
     public void insertElement(String productName) {
         //TODO: Todo el código necesario para INSERTAR un Item a la Base de datos
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ShoppingElementEntry.COLUMN_NAME_TITLE, productName);
+        dbHelper.getWritableDatabase().insert(ShoppingElementEntry.TABLE_NAME, null, contentValues);
+
     }
 
 
@@ -79,15 +84,25 @@ public class ShoppingItemDB {
 
     public void clearAllItems() {
         //TODO: Todo el código necesario para ELIMINAR todos los Items de la Base de datos
+        dbHelper.getWritableDatabase().delete(ShoppingElementEntry.TABLE_NAME, null,null);
 
     }
 
     public void updateItem(ShoppingItem shoppingItem) {
         //TODO: Todo el código necesario para ACTUALIZAR un Item en la Base de datos
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ShoppingElementEntry.COLUMN_NAME_TITLE, shoppingItem.getName());
+        dbHelper.getWritableDatabase().update(ShoppingElementEntry.TABLE_NAME, contentValues,
+                ShoppingElementEntry._ID+"-"+shoppingItem.getId(), null);
+
 
     }
 
     public void deleteItem(ShoppingItem shoppingItem) {
         //TODO: Todo el código necesario para ELIMINAR un Item de la Base de datos
+        String [] lugar = {shoppingItem.getName()};
+        dbHelper.getWritableDatabase().delete(ShoppingElementEntry.TABLE_NAME,
+                ShoppingElementEntry.COLUMN_NAME_TITLE + " LIKE ?", lugar);
+
     }
 }
