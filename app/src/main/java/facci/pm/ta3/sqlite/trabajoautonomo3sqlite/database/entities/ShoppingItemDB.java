@@ -36,14 +36,14 @@ public class ShoppingItemDB {
 
 
     public void insertElement(String productName) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(ShoppingElementEntry.COLUMN_NAME_TITLE,productName);
-        db.insert(ShoppingElementEntry.TABLE_NAME,null,contentValues);
-
+        //SQLiteDatabase db = dbHelper.getReadableDatabase();
         //ContentValues contentValues = new ContentValues();
-        //contentValues.put(ShoppingElementEntry.COLUMN_NAME_TITLE, productName);
-        //dbHelper.getWritableDatabase().insert(ShoppingElementEntry.TABLE_NAME, null, contentValues);
+        //contentValues.put(ShoppingElementEntry.COLUMN_NAME_TITLE,productName);
+        //db.insert(ShoppingElementEntry.TABLE_NAME,null,contentValues);
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ShoppingElementEntry.COLUMN_NAME_TITLE, productName);
+        dbHelper.getWritableDatabase().insert(ShoppingElementEntry.TABLE_NAME, null, contentValues);
 
     }
 
@@ -88,33 +88,36 @@ public class ShoppingItemDB {
 
 
     public void clearAllItems() {
-        SQLiteDatabase db =dbHelper.getReadableDatabase();
-        db.delete(ShoppingElementEntry.TABLE_NAME,null, null);
-        db.close();
-        //dbHelper.getWritableDatabase().delete(ShoppingElementEntry.TABLE_NAME, null,null);
+        //SQLiteDatabase db =dbHelper.getReadableDatabase();
+        //db.delete(ShoppingElementEntry.TABLE_NAME,null, null);
+        //db.close();
+        dbHelper.getWritableDatabase().delete(ShoppingElementEntry.TABLE_NAME,
+                null,null);
 
     }
 
     public void updateItem(ShoppingItem shoppingItem) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        ContentValues contentValues =new ContentValues();
-        contentValues.put(ShoppingElementEntry.COLUMN_NAME_TITLE,shoppingItem.getName());
-        db.update(ShoppingElementEntry.TABLE_NAME,contentValues,ShoppingElementEntry._ID + " = "+ shoppingItem.getId(),null);
-        db.close();
-        //ContentValues contentValues = new ContentValues();
-        //contentValues.put(ShoppingElementEntry.COLUMN_NAME_TITLE, shoppingItem.getName());
-        //dbHelper.getWritableDatabase().update(ShoppingElementEntry.TABLE_NAME, contentValues, ShoppingElementEntry._ID+"-"+shoppingItem.getId(), null);
-
+        //SQLiteDatabase db = dbHelper.getReadableDatabase();
+        //ContentValues contentValues =new ContentValues();
+        //contentValues.put(ShoppingElementEntry.COLUMN_NAME_TITLE,shoppingItem.getName());
+        //db.update(ShoppingElementEntry.TABLE_NAME,contentValues,ShoppingElementEntry._ID + " = "+ shoppingItem.getId(),null);
+        //db.close();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ShoppingElementEntry.COLUMN_NAME_TITLE, shoppingItem.getName());
+        dbHelper.getWritableDatabase().update(ShoppingElementEntry.TABLE_NAME, contentValues,
+                ShoppingElementEntry._ID+"-"+shoppingItem.getId(), null);
 
     }
 
     public void deleteItem(ShoppingItem shoppingItem) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String stringFilter = ShoppingElementEntry._ID+ "=" + shoppingItem.getId();
-        db.delete(ShoppingElementEntry.TABLE_NAME,stringFilter,null);
-        db.close();
-        //String [] lugar = {shoppingItem.getName()};
-        //dbHelper.getWritableDatabase().delete(ShoppingElementEntry.TABLE_NAME,ShoppingElementEntry.COLUMN_NAME_TITLE + " LIKE ?", lugar);
+        //SQLiteDatabase db = dbHelper.getReadableDatabase();
+        //String stringFilter = ShoppingElementEntry._ID+ "=" + shoppingItem.getId();
+        //db.delete(ShoppingElementEntry.TABLE_NAME,stringFilter,null);
+        //db.close();
+        String [] lugar = {shoppingItem.getName()};
+        dbHelper.getWritableDatabase().delete(ShoppingElementEntry.TABLE_NAME,
+                ShoppingElementEntry.COLUMN_NAME_TITLE + " LIKE ?", lugar);
 
     }
 }
+
